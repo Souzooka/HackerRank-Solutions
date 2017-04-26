@@ -9,6 +9,30 @@ function processData(input) {
 }
 
 function nextMove(robot, grid) {
+  let trash = findTrash(grid);
+
+  if (!trash) {
+    return null;
+  }
+
+  if (trash.r < robot.r) {
+    console.log('UP');
+    --robot.r;
+  }
+  else if (trash.r > robot.r) {
+    console.log('DOWN');
+    ++robot.r;
+  }
+  else if (trash.c < robot.c) {
+    console.log('LEFT');
+    --robot.c;
+  }
+  else if (trash.c > robot.c) {
+    console.log('RIGHT');
+    ++robot.c;
+  } else {
+    console.log('CLEAN');
+  }
 
 }
 
