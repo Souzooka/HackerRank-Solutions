@@ -1,0 +1,8 @@
+read INPUT
+if [[ ($INPUT == 'y') || ($INPUT == 'Y') ]]
+    then
+        echo "YES"
+elif [[ ($INPUT == 'n') || ($INPUT == 'N') ]]
+    then
+        echo "NO"
+fi

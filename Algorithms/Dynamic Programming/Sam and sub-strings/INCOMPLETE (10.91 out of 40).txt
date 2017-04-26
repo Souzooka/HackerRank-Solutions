@@ -1,0 +1,1 @@
+NOTE: This algorithm completes in O(n^2) time, which is too slow for later tests.
