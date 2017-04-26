@@ -1,10 +1,11 @@
 /*jshint esversion:6*/
 function processData(input) {
   let inputArr = input.split('\n');
-  let robot = {x: inputArr[0][1], y:inputArr[0][0]};
+  let robot = {r: inputArr[0][0], c:inputArr[0][1]};
   inputArr.shift();
   let grid = input;
-  console.log(robot, grid);
+
+  nextMove(robot, grid);
 }
 
 function nextMove(robot, grid) {
@@ -13,6 +14,18 @@ function nextMove(robot, grid) {
 
 function findTrash(grid) {
 
+  let trash = null;
+  for (let i = 0; i < grid.length; ++i) {
+    for (let j = 0; j < grid.length; ++j) {
+      if (grid[i][j] === 'd') {
+        trash = {r: i, c: j};
+      }
+    }
+    if (trash) {
+      break;
+    }
+  }
+  return trash;
 }
 
 process.stdin.resume();
