@@ -1,9 +1,10 @@
 /*jshint esversion:6*/
 function processData(input) {
   let inputArr = input.split('\n');
-  let robot = {r: inputArr[0][0], c:inputArr[0][1]};
+  inputArr[0] = inputArr[0].split(' ');
+  let robot = {r: Number(inputArr[0][0]), c: Number(inputArr[0][1])};
   inputArr.shift();
-  let grid = input;
+  let grid = inputArr;
 
   nextMove(robot, grid);
 }
@@ -15,21 +16,17 @@ function nextMove(robot, grid) {
     return null;
   }
 
-  if (trash.r < robot.r) {
-    console.log('UP');
-    --robot.r;
-  }
-  else if (trash.r > robot.r) {
+  if (trash.r > robot.r) {
     console.log('DOWN');
-    ++robot.r;
   }
-  else if (trash.c < robot.c) {
-    console.log('LEFT');
-    --robot.c;
+  else if (trash.r < robot.r) {
+    console.log('UP');
   }
   else if (trash.c > robot.c) {
     console.log('RIGHT');
-    ++robot.c;
+  }
+  else if (trash.c < robot.c) {
+    console.log('LEFT');
   } else {
     console.log('CLEAN');
   }
@@ -42,6 +39,7 @@ function findTrash(grid) {
   for (let i = 0; i < grid.length; ++i) {
     for (let j = 0; j < grid.length; ++j) {
       if (grid[i][j] === 'd') {
+
         trash = {r: i, c: j};
       }
     }
