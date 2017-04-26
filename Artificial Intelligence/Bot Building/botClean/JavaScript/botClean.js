@@ -9,12 +9,34 @@ function processData(input) {
   // Parse inputs
   input = input.split('\n');
   input[0] = input[0].split(' ');
-  robot = {x: input[0][0], y: input[0][1]};
+  robot = {x: Number(input[0][0]), y: Number(input[0][1])};
   input.shift();
   grid = input;
 
   nearestTrash = findNearestTrash(robot, grid);
-  console.log(nearestTrash);
+  while (nearestTrash) {
+
+    if (nearestTrash.y < robot.y) {
+      console.log('UP');
+      --robot.y;
+    }
+    else if (nearestTrash.y > robot.y) {
+      console.log('DOWN');
+      ++robot.y;
+    }
+    else if (nearestTrash.x < robot.x) {
+      console.log('LEFT');
+      --robot.x;
+    }
+    else if (nearestTrash.x > robot.x) {
+      console.log('RIGHT');
+      ++robot.x;
+    } else {
+      console.log('CLEAN');
+      grid[robot.y] = grid[robot.y].substr(0, robot.x) + '-' + grid[robot.y].slice(robot.x);
+      nearestTrash = findNearestTrash(robot, grid);
+    }
+  }
 
 }
 
@@ -37,20 +59,31 @@ function findNearestTrash(robot, grid) {
   let closestPos = null;
 
   for (let i = 0; i < grid.length; ++i) {
+
+    if (closestSteps !== null && closestSteps < Math.abs(robot.y - i)) {
+      // trash is not closest
+      continue;
+    }
+
     for (let j = 0; j < grid.length; ++j) {
+
+      if (closestSteps !== null && closestSteps < Math.abs(robot.x - j)) {
+        // trash is not closest
+        continue;
+      }
 
       // If trash is found at this position
       if (grid[i][j] === 'd') {
 
         if (!closestPos) {
-          closestPos = {x: i, y: j};
-          closestSteps = Math.abs(robot.x - i) + Math.abs(robot.y - j);
+          closestPos = {x: j, y: i};
+          closestSteps = Math.abs(robot.x - j) + Math.abs(robot.y - i);
         } else {
           //Compare to existing position
-          let steps = Math.abs(robot.x - i) + Math.abs(robot.y - j);
+          let steps = Math.abs(robot.x - j) + Math.abs(robot.y - i);
 
           if (steps < closestSteps) {
-            closestPos = {x: i, y: j};
+            closestPos = {x: j, y: i};
             closestSteps = steps;
           }
         }
