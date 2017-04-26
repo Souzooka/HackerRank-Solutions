@@ -14,28 +14,26 @@ function processData(input) {
   grid = input;
 
   nearestTrash = findNearestTrash(robot, grid);
-  while (nearestTrash) {
 
-    if (nearestTrash.y < robot.y) {
-      console.log('UP');
-      --robot.y;
-    }
-    else if (nearestTrash.y > robot.y) {
-      console.log('DOWN');
-      ++robot.y;
-    }
-    else if (nearestTrash.x < robot.x) {
-      console.log('LEFT');
-      --robot.x;
-    }
-    else if (nearestTrash.x > robot.x) {
-      console.log('RIGHT');
-      ++robot.x;
-    } else {
-      console.log('CLEAN');
-      grid[robot.y] = grid[robot.y].substr(0, robot.x) + '-' + grid[robot.y].slice(robot.x);
-      nearestTrash = findNearestTrash(robot, grid);
-    }
+  if (nearestTrash.y < robot.y) {
+    console.log('UP');
+    --robot.y;
+  }
+  else if (nearestTrash.y > robot.y) {
+    console.log('DOWN');
+    ++robot.y;
+  }
+  else if (nearestTrash.x < robot.x) {
+    console.log('LEFT');
+    --robot.x;
+  }
+  else if (nearestTrash.x > robot.x) {
+    console.log('RIGHT');
+    ++robot.x;
+  } else {
+    console.log('CLEAN');
+    grid[robot.y] = grid[robot.y].substr(0, robot.x) + '-' + grid[robot.y].slice(robot.x);
+    nearestTrash = findNearestTrash(robot, grid);
   }
 
 }
