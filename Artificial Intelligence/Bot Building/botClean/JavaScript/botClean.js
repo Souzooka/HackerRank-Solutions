@@ -32,7 +32,7 @@ function processData(input) {
     ++robot.x;
   } else {
     console.log('CLEAN');
-    grid[robot.y] = grid[robot.y].substr(0, robot.x) + '-' + grid[robot.y].slice(robot.x);
+    grid[robot.y] = grid[robot.y].substr(0, robot.x) + '-' + grid[robot.y].slice(robot.x+1);
     nearestTrash = findNearestTrash(robot, grid);
   }
 
@@ -72,6 +72,7 @@ function findNearestTrash(robot, grid) {
 
       // If trash is found at this position
       if (grid[i][j] === 'd') {
+
 
         if (!closestPos) {
           closestPos = {x: j, y: i};
