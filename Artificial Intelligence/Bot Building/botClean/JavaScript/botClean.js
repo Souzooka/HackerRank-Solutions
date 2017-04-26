@@ -9,7 +9,7 @@ function processData(input) {
   // Parse inputs
   input = input.split('\n');
   input[0] = input[0].split(' ');
-  robot = {x: Number(input[0][0]), y: Number(input[0][1])};
+  robot = {x: Number(input[0][1]), y: Number(input[0][0])};
   input.shift();
   grid = input;
 
