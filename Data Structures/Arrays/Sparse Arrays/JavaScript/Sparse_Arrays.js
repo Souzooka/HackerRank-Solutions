@@ -18,13 +18,17 @@ function processData(input) {
   }
 
   const queriesCount = Number(inputArr.shift());
-  let queries = [];
 
-  for (let i = 0; i < queriesCount; ++i) {
-    queries.push(inputArr.shift());
+  // Respond to our queries
+  for (let i = 0; i< queriesCount; ++i) {
+    let query = inputArr.shift();
+
+    if (!strings[query]) {
+      console.log('0');
+    } else {
+      console.log(String(strings[query]));
+    }
   }
-
-  console.log(strings)
 }
 
 process.stdin.resume();
