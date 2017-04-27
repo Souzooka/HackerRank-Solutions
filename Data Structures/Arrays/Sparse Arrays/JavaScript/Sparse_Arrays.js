@@ -1,7 +1,22 @@
 /*jshint esversion:6*/
 
 function processData(input) {
-  console.log('Hello World!');
+  const inputArr = input.split('\n');
+  const stringsCount = Number(inputArr.shift());
+  let strings = [];
+
+  for (let i = 0; i < stringsCount; ++i) {
+    strings.push(inputArr.shift());
+  }
+
+  const queriesCount = Number(inputArr.shift());
+  let queries = [];
+
+  for (let i = 0; i < queriesCount; ++i) {
+    queries.push(inputArr.shift());
+  }
+
+  console.log(queriesCount, queries);
 }
 
 process.stdin.resume();
