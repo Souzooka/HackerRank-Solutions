@@ -7,7 +7,9 @@ function processData(input) {
   let strings = {};
 
   // Store a count of each string in an object for better performance
-  // the alternative is iterating through strings for every query, which is slow
+  // the alternative is iterating through an array for every query, which is slow
+  // this approach offers constant lookup times (0(1)) for every query,
+  // opposed to linear (0(n)) for array iteration
   for (let i = 0; i < stringsCount; ++i) {
     let string = inputArr.shift();
     if (!strings[string]) {
