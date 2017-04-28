@@ -23,6 +23,7 @@ function readLine() {
 
 function main() {
   const queries = parseInt(readLine());
+  console.log(queries)
   for(let a0 = 0; a0 < queries; a0++){
     const n_temp = readLine().split(' ');
     const citiesCount = parseInt(n_temp[0]);
@@ -40,13 +41,14 @@ function main() {
 
     if (roadCost > (libraryCost << 1)) {
       // 1
+      input_currentline += roadsCount;
       console.log(libraryCost * citiesCount);
     } else {
       // 2
       // Seperate each group into an array in an array
       let groups = [[]];
       let groupsIdx = 0;
-      for (let i = 0; i < roadsCount; ++i) {
+      for (var i = 0; i < roadsCount; ++i) {
         const city_1_temp = readLine().split(' ');
         const city1 = parseInt(city_1_temp[0]);
         const city2 = parseInt(city_1_temp[1]);
@@ -66,7 +68,42 @@ function main() {
           return groups[i].indexOf(item) == pos;
         });
       }
-      console.log(groups);
+
+      // Merge each group
+      if (groups.length > 1) {
+        let isClean = false;
+        while (!isClean) {
+          isClean = true;
+          for (let i = 0; i < groups.length-1; ++i) {
+            // if the next group contains an element of the previous group
+            // join the two groups and flag that we need another pass
+            if (groups[i].some( (v) => {return groups[i+1].indexOf(v);})) {
+              groups[i] = groups[i].concat(groups[i+1]);
+              groups.splice(i+1, 1);
+              isClean = false;
+              break;
+            }
+          }
+        }
+
+
+        // after merging, filter duplicates again
+        for (let i = 0; i < groups.length; ++i) {
+          groups[i] = groups[i].filter( (item, pos) => {
+            return groups[i].indexOf(item) == pos;
+          });
+        }
+      }
+
+      // iterate over the array and determine how many cities are grouped
+      let groupedCities = 0;
+      for (let i = 0; i < groups.length; ++i) {
+        groupedCities += groups[i].length;
+      }
+      let unGroupedCities = citiesCount - groupedCities;
+
+      // (libraryCost * (number of groups)) + (roadCost * (citiesCount - (number of groups)))
+      console.log((libraryCost * groups.length) + (roadCost * (citiesCount - (groups.length))));
     }
   }
 }
