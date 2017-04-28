@@ -23,7 +23,6 @@ function readLine() {
 
 function main() {
   const queries = parseInt(readLine());
-  console.log(queries)
   for(let a0 = 0; a0 < queries; a0++){
     const n_temp = readLine().split(' ');
     const citiesCount = parseInt(n_temp[0]);
