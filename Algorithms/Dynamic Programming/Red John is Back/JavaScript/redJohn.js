@@ -3,12 +3,22 @@ function processData(input) {
   let inputArr = input.split('\n');
   let cases = Number(inputArr.shift());
   for (let i = 0; i < cases; ++i) {
-    // possible combinations simplify to N - 2 (with 1 being the min)
-    let combinations = Number(inputArr.shift()) - 2;
-    if (combinations < 1) {
-      combinations = 1;
+
+
+    let dimension = Number(inputArr.shift());
+
+    function findCombinations(dimension) {
+      if (dimension < 4) {
+        return 1;
+      }
+      else if (dimension == 4) {
+        return 2;
+      } else {
+        return findCombinations(dimension-1) + findCombinations(dimension-4);
+      }
     }
 
+    let combinations = findCombinations(dimension);
     let primes = 0;
 
     // only numbers above 1 are considered to be possibly prime, so start at 2
