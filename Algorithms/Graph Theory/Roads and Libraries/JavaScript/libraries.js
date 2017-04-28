@@ -39,14 +39,34 @@ function main() {
     //    (libraryCost * (number of groups)) + (roadCost * (citiesCount - (number of groups)))
 
     if (roadCost > (libraryCost << 1)) {
+      // 1
       console.log(libraryCost * citiesCount);
-    }
+    } else {
+      // 2
+      // Seperate each group into an array in an array
+      let groups = [[]];
+      let groupsIdx = 0;
+      for (let i = 0; i < roadsCount; ++i) {
+        const city_1_temp = readLine().split(' ');
+        const city1 = parseInt(city_1_temp[0]);
+        const city2 = parseInt(city_1_temp[1]);
 
-    for(let a1 = 0; a1 < roadsCount; a1++){
-      const city_1_temp = readLine().split(' ');
-      const city_1 = parseInt(city_1_temp[0]);
-      const city_2 = parseInt(city_1_temp[1]);
+        if (i !== 0 &&
+            groups[groupsIdx].indexOf(city1) === -1 &&
+            groups[groupsIdx].indexOf(city2) === -1) {
+          ++groupsIdx;
+          groups[groupsIdx] = [];
+        }
+        groups[groupsIdx].push(city1, city2);
+      }
+
+      // Filter each group
+      for (let i = 0; i < groups.length; ++i) {
+        groups[i] = groups[i].filter( (item, pos) => {
+          return groups[i].indexOf(item) == pos;
+        });
+      }
+      console.log(groups);
     }
   }
-
 }
