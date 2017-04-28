@@ -23,7 +23,7 @@ function readLine() {
 
 function main() {
   const queries = parseInt(readLine());
-  for(let a0 = 0; a0 < q; a0++){
+  for(let a0 = 0; a0 < queries; a0++){
     const n_temp = readLine().split(' ');
     const citiesCount = parseInt(n_temp[0]);
     const roadsCount = parseInt(n_temp[1]);
@@ -31,12 +31,16 @@ function main() {
     const roadCost = parseInt(n_temp[3]);
 
     // it appears there's two clear scenarios for this problem:
-    // 1. (the easy solution) roads cost greater than libraryCost*2
+    // 1. (the easy solution) roadCost is greater than libraryCost*2
     //    so just build a library in every node, problem solved
     //
-    // 2. the other scenario being that libraries are not that expensive,
+    // 2. the other scenario being that roads are not that expensive,
     //    and therefore the total cost should come out to something like
     //    (libraryCost * (number of groups)) + (roadCost * (citiesCount - (number of groups)))
+
+    if (roadCost > (libraryCost << 1)) {
+      console.log(libraryCost * citiesCount);
+    }
 
     for(let a1 = 0; a1 < roadsCount; a1++){
       const city_1_temp = readLine().split(' ');
