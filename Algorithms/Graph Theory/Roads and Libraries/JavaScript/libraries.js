@@ -104,7 +104,7 @@ function main() {
       if (groups[0].length === 0) {
         groups.splice(0, 1);
       }
-
+      console.log(groups.length)
       // (libraryCost * (number of groups)) + (roadCost * (citiesCount - (number of groups)))
       console.log((libraryCost * (groups.length + unGroupedCities)) + (roadCost * (citiesCount - (groups.length + unGroupedCities))));
     }
