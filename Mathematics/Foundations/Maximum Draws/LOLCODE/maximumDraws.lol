@@ -1,0 +1,24 @@
+BTW Enter your code here. Read input from STDIN. Print output to STDOUT
+HAI 13.37
+I HAS A QUERIES
+GIMMEH QUERIES
+MAEK QUERIES A NUMBR
+
+I HAS A ITERATOR ITZ 0
+MAEK ITERATOR A NUMBR
+
+IM IN YR CODE
+  I HAS A SOOOOOCKS
+  GIMMEH SOOOOOCKS
+  MAEK SOOOOOCKS A NUMBR
+  SOOOOOCKS R SUM OF SOOOOOCKS AN 1
+
+  BTW Y DON LOOP GTFO
+        BOTH SAEM SOOOOOCKS AN 1
+              O RLY?
+                YA RLY
+                      GTFO
+                  OIC
+                                    VISIBLE SOOOOOCKS
+IM OUTTA YR CODE
+KTHXBYE
