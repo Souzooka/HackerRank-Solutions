@@ -26,36 +26,77 @@ function nextMove(robot, grid) {
 
     if (robot.r === trash.r && robot.c === trash.c) {
       console.log('CLEAN');
-    }
-    else if (robot.c < trash.c) {
-      console.log('RIGHT');
-    }
-    else if (robot.c > trash.c) {
-      console.log('LEFT');
-    }
-    else if (robot.r < trash.r) {
-      console.log('UP');
-    }
-    else if (robot.r > trash.r) {
-      console.log('DOWN');
+    } else {
+      move(robot, trash);
     }
   }
   else if (!isOnPatrolRoute(robot)) {
-    // Move to closest patrol spot
+    move(robot, findNearestPatrol(robot));
   } else {
-    // Move to next patrol spot
+    move(robot, ROUTE_PATROL[(findPatrolRouteIdx(robot) + 1) % ROUTE_PATROL.length]) ;
   }
 }
 
-function isTrashVisible(grid) {
-  let visible = false;
-  for (let i = 0; i < grid.length; ++i) {
-    if (grid[i].indexOf(SYMBOL_TRASH) !== -1) {
-      visible = true;
-      break;
+function move(robot, destination) {
+  if (robot.c < destination.c) {
+    console.log('RIGHT');
+  }
+  else if (robot.c > destination.c) {
+    console.log('LEFT');
+  }
+  else if (robot.r < destination.r) {
+    console.log('DOWN');
+  }
+  else if (robot.r > destination.r) {
+    console.log('UP');
+  }
+}
+
+/** isOnPatrolRoute(robot)
+  * Parameters:
+  *   A robot obj with these keys:
+  *     r: Row which the robot is located at
+  *     c: Column which the robot is located at
+  * Return values:
+  *   bool
+  * Behavior:
+  *   Checks if the robot's current position matches with any of the patrol spots
+  */
+function isOnPatrolRoute(robot) {
+  for (let i = 0; i < ROUTE_PATROL.length; ++i) {
+    if (robot.r === ROUTE_PATROL[i].r && robot.c === ROUTE_PATROL[i].c) {
+      return true;
     }
   }
-  return visible;
+  return false;
+}
+
+/** findPatrolRouteIdx(robot)
+  * Parameters:
+  *   A robot obj with these keys:
+  *     r: Row which the robot is located at
+  *     c: Column which the robot is located at
+  * Return values:
+  *   current routeIdx or false (this shouldn't have been called in this scenario)
+  * Behavior:
+  *   Finds the route index the robot is currently occupying
+  */
+function findPatrolRouteIdx(robot) {
+  for (let i = 0; i < ROUTE_PATROL.length; ++i) {
+    if (robot.r === ROUTE_PATROL[i].r && robot.c === ROUTE_PATROL[i].c) {
+      return i;
+    }
+  }
+  return false;
+}
+
+function isTrashVisible(grid) {
+  for (let i = 0; i < grid.length; ++i) {
+    if (grid[i].indexOf(SYMBOL_TRASH) !== -1) {
+      return true;
+    }
+  }
+  return false;
 }
 
 function findNearestTrash(robot, grid) {
@@ -81,12 +122,29 @@ function findNearestTrash(robot, grid) {
           //Compare to existing position
           let steps = Math.abs(robot.r - i) + Math.abs(robot.c - j);
 
-          if (steps < closestSteps) {
+          // If steps are the same as closest step, prefer corners
+          if (steps < closestSteps ||
+            (steps === closestSteps && (i === 0 || i === grid.length-1) && (j === 0 || j === grid.length-1))) {
             closestPos = {r: i, c: j};
             closestSteps = steps;
           }
         }
       }
+    }
+  }
+  return closestPos;
+}
+
+function findNearestPatrol(robot) {
+  let closestSteps = null;
+  let closestPos = null;
+
+  for (let i = 0; i < ROUTE_PATROL.length; ++i) {
+    let steps = Math.abs(robot.r - ROUTE_PATROL[i].r) + Math.abs(robot.c + ROUTE_PATROL[i].c);
+
+    if (steps < closestSteps || closestSteps === null) {
+      closestSteps = steps;
+      closestPos = ROUTE_PATROL[i];
     }
   }
   return closestPos;
