@@ -12,17 +12,33 @@ const ROUTE_PATROL = [
 ];
 
 function processData(input) {
-  let inputArr = input.split('\n');
-  let locationArr = inputArr.shift().split(' ');
-  let robot = {r: parseInt(locationArr[0]), c: parseInt(locationArr[1])};
-  let grid = inputArr;
+  const inputArr = input.split('\n');
+  const locationArr = inputArr.shift().split(' ');
+  const robot = {r: parseInt(locationArr[0]), c: parseInt(locationArr[1])};
+  const grid = inputArr;
 
   nextMove(robot, grid);
 }
 
 function nextMove(robot, grid) {
   if (isTrashVisible(grid)) {
-    console.log(findNearestTrash(robot, grid));
+    const trash = findNearestTrash(robot, grid);
+
+    if (robot.r === trash.r && robot.c === trash.c) {
+      console.log('CLEAN');
+    }
+    else if (robot.c < trash.c) {
+      console.log('RIGHT');
+    }
+    else if (robot.c > trash.c) {
+      console.log('LEFT');
+    }
+    else if (robot.r < trash.r) {
+      console.log('UP');
+    }
+    else if (robot.r > trash.r) {
+      console.log('DOWN');
+    }
   }
   else if (!isOnPatrolRoute(robot)) {
     // Move to closest patrol spot
