@@ -16,7 +16,19 @@ function processData(input) {
   let locationArr = inputArr.shift().split(' ');
   let robot = {r: parseInt(locationArr[0]), c: parseInt(locationArr[1])};
   let grid = inputArr;
-  console.log(isTrashVisible(grid))
+
+  nextMove(robot, grid);
+}
+
+function nextMove(robot, grid) {
+  if (isTrashVisible(grid)) {
+    console.log(findNearestTrash(robot, grid));
+  }
+  else if (!isOnPatrolRoute(robot)) {
+    // Move to closest patrol spot
+  } else {
+    // Move to next patrol spot
+  }
 }
 
 function isTrashVisible(grid) {
@@ -28,6 +40,40 @@ function isTrashVisible(grid) {
     }
   }
   return visible;
+}
+
+function findNearestTrash(robot, grid) {
+  let closestSteps = null;
+  let closestPos = null;
+
+  for (let i = 0; i < grid.length; ++i) {
+    if (closestSteps !== null && closestSteps < Math.abs(robot.y - i)) {
+      // trash is not closest
+      continue;
+    }
+    for (let j = 0; j < grid.length; ++j) {
+      if (closestSteps !== null && closestSteps < Math.abs(robot.x - j)) {
+        // trash is not closest
+        continue;
+      }
+      // If trash is found at this position
+      if (grid[i][j] === SYMBOL_TRASH) {
+        if (!closestPos) {
+          closestPos = trash = {r: i, c: j};
+          closestSteps = Math.abs(robot.r - i) + Math.abs(robot.c - j);
+        } else {
+          //Compare to existing position
+          let steps = Math.abs(robot.r - i) + Math.abs(robot.c - j);
+
+          if (steps < closestSteps) {
+            closestPos = {r: i, c: j};
+            closestSteps = steps;
+          }
+        }
+      }
+    }
+  }
+  return closestPos;
 }
 
 process.stdin.resume();
