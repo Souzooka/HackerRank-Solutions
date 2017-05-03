@@ -1,0 +1,2 @@
+read year
+echo $(($year % 11))
