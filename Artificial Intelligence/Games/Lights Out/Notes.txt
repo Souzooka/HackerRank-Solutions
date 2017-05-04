@@ -1,0 +1,53 @@
+Lights Out
+Transcribed Whiteboarding:
+
+The game is a competitive game between 2 bots that uses the same 8x8 board.
+
+When a 1 is hit, that position along with the position to the right and below will flip state (1 to 0, 0 to 1).
+
+000    000
+010 -> 001
+000    010
+
+The bot with the last move wins, and the last move has occurred when all cells are in OFF (0) position.
+
+Output format:
+'<row to hit> <column to hit>'
+Only ON cells can be hit, hitting an OFF cell or not generating a reponse will cause the player to lose.
+
+_____________________________
+
+The BEST solution would be one where the bot attempts to keep the board in a state which requires an EVEN amount of minimum turns to solve after its own turn, so the opponent can not win.
+
+e.g. after going the best case is 2 minimum turns to win, the opponent does the best move (which is possible most times simply by the virtue that simply bots are likely just iterating through the matrix until they hit a 1), and then when control is restored to our bot we play the winning move.
+
+If there is only 1 cluster left on the board (using 2-pixel connectivity (right, down)), these represent states which can be won in one move:
+
+(NOTE: 'X' represents a border).
+
+000 | 00X | 000 | 00X
+011 | 01X | 011 | 01X
+010 | 01X | XXX | XXX
+
+Therefore, also avoid leaving the board in such a state, as the opponent can win by hitting just one cell.
+
+Since the cell above the hit cell is never flipped, we can start evaluating the minimum number of turns row-by-row. For example, take these two rows:
+
+01101100
+01010101
+
+The first row can be cleared in 2 moves by logging "0 1", "0 4". The second row then is mutated by the result of our moves into:
+
+00011101
+
+Which can be cleared in 3 moves by logging "1 3", "1 5", "1 6". Therefore this 8x2 board can be solved in 2+3 or 5 moves at minimum, etc.
+
+Using this logic, we can evaluate what the board will look like if we were to hit a cell, and therefore determine if that move would leave us in a favorable state (an even minimum number of remaining moves to win) or an unfavorable state (an odd minimum number of remaining moves to win).
+
+Therefore, we can create a more robust robot that will follow this logic:
+
+If a 1 is found, determine if the resulting board state is favorable or unfavorable, and hit the first move which causes a favorable board state for us.
+
+If no move will create a favorable board state, then do the first move which will not create a winning scenario for the opponent.
+
+Failing that, hit the first 1 and pray.
