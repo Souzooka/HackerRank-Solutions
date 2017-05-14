@@ -10,7 +10,7 @@ function processData(input) {
 
     for (let j = 0; j < flavorsCount; ++j) {
       for (let k = j; k < flavorsCount; ++k) {
-        if (flavorCosts[j] + flavorCosts[k] === dollarsCount) {
+        if (flavorCosts[j] + flavorCosts[k] === dollarsCount && j !== k) {
           flavorsBought = (j < k) ? [j+1, k+1] : [k+1, j+1];
         }
       }
